@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 16:34:36 by zel-kass          #+#    #+#             */
-/*   Updated: 2022/05/27 17:17:23 by zel-kass         ###   ########.fr       */
+/*   Updated: 2022/05/29 23:20:45 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@
 
 char	*get_next_line(int fd);
 int		ft_llen(char *str);
-char	*ft_strjoin(char *s1, char *s2);
-int		ft_strchr(const char *str, int ret);
+void	ft_strjoin(char *s1, char *s2);
+int		ft_strchr(const char *str);
+char	*ft_clean(char *str, int index);
 int		ft_strlen(char *str);
-char	*ft_strdup(char *src);
 void	ft_bzero(void *s);
 
 #endif

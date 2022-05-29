@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-kass <zel-kass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 16:36:49 by zel-kass          #+#    #+#             */
-/*   Updated: 2022/05/27 17:17:09 by zel-kass         ###   ########.fr       */
+/*   Updated: 2022/05/29 23:20:41 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,48 +24,22 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-char	*ft_strdup(char *src)
+void	ft_strjoin(char *s1, char *s2)
 {
 	int		i;
-	char	*dup;
-
-	dup = malloc(sizeof(char) * (ft_strlen(src) + 1));
-	if (!dup)
-		return (0);
-	i = 0;
-	while (src[i])
-	{
-		dup[i] = src[i];
-		i++;
-	}
-	dup[i] = '\0';
-	return (dup);
-}
-
-char	*ft_strjoin(char *s1, char *s2)
-{
-	int		i;
-	int		j;
 	size_t	len;
-	char	*dest;
 
-	if (!s1)
-		return (ft_strdup(s2));
-	len = ft_strlen(s1) + ft_strlen(s2);
-	dest = (char *)malloc(sizeof(char) * (len + 1));
-	if (!dest)
-		return (NULL);
+	len = ft_strlen(s1);
 	i = -1;
-	j = -1;
-	while (s1[++i])
-		dest[i] = s1[i];
-	while (s2[++j])
-		dest[i++] = s2[j];
-	dest[i] = '\0';
-	return (dest);
+	while (s2[++i])
+	{
+		s1[len] = s2[i];
+		len++;
+	}
+	s1[len] = '\0';
 }
 
-int	ft_strchr(const char *str, int ret)
+int	ft_strchr(const char *str)
 {
 	int		i;
 
@@ -78,9 +52,6 @@ int	ft_strchr(const char *str, int ret)
 			return (i);
 		i++;
 	}
-	//printf("%d", BUFFER_SIZE);
-	if (ret == 0)
-	 	return (i);
 	return (0);
 }
 
@@ -93,4 +64,27 @@ void	ft_bzero(void *s)
 	i = 0;
 	while (ptr && ptr[i])
 		ptr[i++] = '\0';
+}
+
+char	*ft_clean(char *str, int index)
+{
+	int		i;
+	int		j;
+	char	*line;
+
+	i = 0;
+	j = 0;
+	line = malloc(sizeof(char) * (index + 1));
+	if (!line)
+		return (NULL);
+	while (str[i] && i <= index)
+	{
+		line[i] = str[i];
+		i++;
+	}
+	line[i] = '\0';
+	while (str[i])
+		str[j++] = str[i++];
+	ft_bzero(&str[j]);
+	return (line);
 }
