@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smessal <smessal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 19:10:47 by smessal           #+#    #+#             */
-/*   Updated: 2022/05/30 19:32:33 by smessal          ###   ########.fr       */
+/*   Updated: 2022/05/30 20:03:17 by smessal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_stash_san(char *stash, char *buf)
 {
@@ -45,23 +45,23 @@ char	*get_next_line(int fd)
 	int			ret;
 	char		*line;
 	char		*stash;
-	static char	buf[BUFFER_SIZE + 1];
+	static char	buf[FOPEN_MAX][BUFFER_SIZE + 1];
 
-	if (fd < 0 || fd > 1024 || BUFFER_SIZE < 1)
+	if (fd < 0 || fd > FOPEN_MAX || BUFFER_SIZE < 1)
 		return (NULL);
 	ret = BUFFER_SIZE;
 	stash = NULL;
-	stash = ft_strjoin(stash, buf);
-	while (ret == BUFFER_SIZE && !ft_strchr(buf))
+	stash = ft_strjoin(stash, buf[fd]);
+	while (ret == BUFFER_SIZE && !ft_strchr(buf[fd]))
 	{
-		ret = read(fd, buf, BUFFER_SIZE);
+		ret = read(fd, buf[fd], BUFFER_SIZE);
 		if (ret == -1)
 			return (free(stash), NULL);
-		buf[ret] = '\0';
+		buf[fd][ret] = '\0';
 		if (ret == 0 && !stash[0])
 			return (free(stash), NULL);
-		stash = ft_strjoin(stash, buf);
+		stash = ft_strjoin(stash, buf[fd]);
 	}
-	line = ft_stash_san(stash, buf);
+	line = ft_stash_san(stash, buf[fd]);
 	return (free(stash), line);
 }
